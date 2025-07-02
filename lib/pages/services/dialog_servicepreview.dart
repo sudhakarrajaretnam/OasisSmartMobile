@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 final serviceItemQuantity = StateProvider.autoDispose<int>((ref) => 0);
 final selectDateProvider = StateProvider.autoDispose<DateTime>((ref) => DateTime.now());
@@ -70,6 +70,7 @@ class FullScreenDialog extends ConsumerStatefulWidget {
 
 class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
   final TextEditingController _messageController = TextEditingController();
+  final TextEditingController _descController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -79,6 +80,7 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
   @override
   void dispose() {
     _messageController.dispose();
+    _descController.dispose();
     super.dispose();
   }
 
@@ -89,6 +91,7 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
     final isInCart = ref.read(serviceNotifierProvider.notifier).isItemInCart(widget.cartItem.serviceId);
     final setDate = ref.watch(selectDateProvider);
     final setTime = ref.watch(selectTimeProvider);
+    _descController.text = widget.cartItem.description;
     //ref.read(itemQuantity.notifier).state = 1;
     return Scaffold(
       //backgroundColor: Colors.transparent,
@@ -121,13 +124,6 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             borderRadius: const BorderRadius.vertical(top: Radius.circular(20), bottom: Radius.circular(20)),
-                            // boxShadow: [
-                            //   BoxShadow(
-                            //     color: Colors.grey,
-                            //     offset: Offset(0.0, 1.0), //(x,y)
-                            //     blurRadius: 6.0,
-                            //   ),
-                            // ],
                           ),
                         ),
                         Padding(
@@ -154,96 +150,93 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
                             ),
                           ),
                         ),
-                        // Positioned(
-                        //   //alignment: Alignment.topRight,
-                        //   top: 2,
-                        //   right: 0,
-                        //   child: IconButton(
-                        //     icon: const Icon(Icons.close),
-                        //     onPressed: () {
-                        //       Navigator.of(context).pop();
-                        //     },
-                        //   ),
-                        // ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    widget.cartItem.serviceName,
-                                    textAlign: TextAlign.start,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.none,
-                                      color: Colors.black87,
+                              Expanded(
+                                flex: isInCart ? 5 : 10,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      widget.cartItem.serviceName,
+                                      textAlign: TextAlign.start,
+                                      maxLines: 2,
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.none,
+                                        color: Colors.black87,
+                                        overflow: TextOverflow.ellipsis
+                                      ),
                                     ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "${widget.cartItem.noOfPersons} Person${widget.cartItem.noOfPersons == 1 ? '' : 's'}",
-                                        style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        "$currency ${widget.cartItem.price}",
-                                        style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                    Row(
+                                      children: [
+                                        // Text(
+                                        //   "${widget.cartItem.noOfPersons} Person${widget.cartItem.noOfPersons == 1 ? '' : 's'}",
+                                        //   style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                        //   textAlign: TextAlign.center,
+                                        // ),
+                                        // const SizedBox(width: 10),
+                                        Text(
+                                          "$currency ${widget.cartItem.price}",
+                                          style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                               isInCart
-                                  ? Material(
-                                      color: Colors.transparent,
-                                      child: InkWell(
-                                        borderRadius: const BorderRadius.horizontal(left: Radius.circular(30), right: Radius.circular(30)),
-                                        onTap: () {
-                                          ref.read(serviceNotifierProvider.notifier).removeItem(widget.cartItem.serviceId);
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.red, width: 1),
-                                            borderRadius: BorderRadius.circular(30), // Fully rounded corners
-                                          ),
-                                          child: const Row(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                CupertinoIcons.trash,
-                                                size: 20,
-                                                color: Colors.red,
-                                              ),
-                                              SizedBox(width: 5),
-                                              Text(
-                                                'Delete cart',
-                                                style: TextStyle(
+                                  ? Expanded(
+                                    flex: 5,
+                                    child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          borderRadius: const BorderRadius.horizontal(left: Radius.circular(30), right: Radius.circular(30)),
+                                          onTap: () {
+                                            ref.read(serviceNotifierProvider.notifier).removeItem(widget.cartItem.serviceId);
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.red, width: 1),
+                                              borderRadius: BorderRadius.circular(30), // Fully rounded corners
+                                            ),
+                                            child: const Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  CupertinoIcons.trash,
+                                                  size: 20,
                                                   color: Colors.red,
-                                                  //fontWeight: FontWeight.bold,
-                                                  fontSize: 16,
                                                 ),
-                                              ),
-                                            ],
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  'Delete cart',
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    //fontWeight: FontWeight.bold,
+                                                    fontSize: 16,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    )
+                                  )
                                   : Container(),
                             ],
                           ),
@@ -307,12 +300,67 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
                                 ],
                               ),
                               Text(
-                                '$currency ${(widget.cartItem.price * quantity).toStringAsFixed(2)}',
+                                '$currency ${(widget.cartItem.price * quantity).toStringAsFixed(0)}',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.none,
                                   color: Colors.black87,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Service Description',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black87,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              TextField(
+                                controller: _descController,
+                                maxLines: 5,
+                                readOnly: true,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  //color: Colors.grey,
+                                  
+                                ),
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300, // Default border color
+                                      width: 1.5,
+                                    ),
+                                  ),
+
+                                  // Border when the TextField is focused
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey.shade300, // Border color when focused
+                                      width: 1.5,
+                                    ),
+                                  ),
+
+                                  // Border when there's an error
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: const BorderSide(
+                                      color: Colors.red, // Border color when there's an error
+                                      width: 1.5,
+                                    ),
+                                  ),
+
+                                  filled: true,
+                                  fillColor: Colors.grey.shade200 // Light background color
                                 ),
                               ),
                             ],
@@ -361,7 +409,7 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
                                         child: Row(
                                           children: [
                                             const Icon(Icons.calendar_today, size: 20),
-                                            const SizedBox(width: 10),
+                                            const SizedBox(width: 5),
                                             Text(
                                               DateFormat('dd MMM yyyy').format(setDate),
                                               style: const TextStyle(
@@ -427,7 +475,7 @@ class _FullScreenDialog extends ConsumerState<FullScreenDialog> {
                                         child: Row(
                                           children: [
                                             const Icon(Icons.access_time, size: 20),
-                                            const SizedBox(width: 10),
+                                            const SizedBox(width: 5),
                                             Text(
                                               ref.watch(selectTimeProvider).format(context),
                                               style: const TextStyle(

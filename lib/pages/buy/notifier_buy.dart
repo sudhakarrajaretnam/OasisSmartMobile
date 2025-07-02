@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class BuyNotifier extends ChangeNotifier {
   bool _showSearch = false;
@@ -26,7 +26,7 @@ class GroceryApiService {
   GroceryApiService(this.baseUrl);
 
   Future<List<dynamic>> searchCategory(String query) async {
-    print('$baseUrl/buy/categories?search=$query');
+    //print('$baseUrl/buy/categories?search=$query');
     final url = Uri.parse('$baseUrl/grocery/categories?search=$query');
     final response = await http.get(url);
 
@@ -56,7 +56,7 @@ final groceryApiProvider = Provider<GroceryApiService>((ref) {
   return GroceryApiService(apiUrl);
 });
 
-final groceryCategoryProvider = FutureProvider.family<List<dynamic>, String>((ref, query) async {
+final groceryCategoryProvider = FutureProvider.autoDispose.family<List<dynamic>, String>((ref, query) async {
   final groceryApi = ref.read(groceryApiProvider);
   return groceryApi.searchCategory(query);
 });
@@ -81,7 +81,7 @@ class GroceryItemsParams {
 //   return groceryApi.searchProduct(params['categoryId']!, params['query']!);
 // });
 
-final groceryItemsProvider = FutureProvider.family<List<dynamic>, GroceryItemsParams>((ref, params) async {
+final groceryItemsProvider = FutureProvider.autoDispose.family<List<dynamic>, GroceryItemsParams>((ref, params) async {
   final groceryApi = ref.read(groceryApiProvider);
   return groceryApi.searchProduct(params.categoryId, params.query);
 });

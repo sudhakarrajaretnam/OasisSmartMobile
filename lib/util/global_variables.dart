@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 
-const nameTitle = "Oassis";
+const nameTitle = "Oasis Smart";
 //const primaryColor = Color(0xFF4CAF50);
 const primaryColor = Color(0xFF4966B5);
 const bodyBackground = Color(0xFFA0BFC9);
 const lightBg = Color(0xFFAFC3F9);
-const int resendOtpTime = 10;
+const int resendOtpTime = 30;
 late String mobileNumber;
 late String userId;
 late String userName;
-const currency = '₹';
-// '﷼'
+late String userCountry;
+//const currency = '₹';
+//const currency = '﷼';
+const currency = 'OMR ';
 const historyDataLimit = 20;
 //const String apiUrl = 'http://10.0.2.2:7000/mobile';
-//const String apiUrl = 'http://eliastech.centralindia.cloudapp.azure.com:7501/mobile';
-const String apiUrl = 'https://oasissmarts.eliastech.i/mobile';
+//const String apiUrl = 'http://127.0.0.1:7500/mobile';
+const String apiUrl = 'https://oasissmarts.eliastech.in/mobile';
 
 enum CategoryType {
   grocery,

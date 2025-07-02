@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/welcome/notifier_otp.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,7 +51,13 @@ class CartItem {
 }
 
 class CartNotifier extends StateNotifier<List<CartItem>> {
-  CartNotifier() : super([]);
+  late Ref ref;
+  // ServiceNotifier(this.ref) : super([]) {
+  //   ref = ref;
+  // }
+  CartNotifier(this.ref) : super([]) {
+    ref = ref;
+  }
   int _orderId = 0;
   String _recId = "";
   String _createdAt = "";
@@ -132,6 +139,7 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
       if (response.statusCode == 200) {
         final prefs = await SharedPreferences.getInstance();
         if (prefs.getString('userName') != fullName) {
+          ref.read(nameProvider.notifier).state = fullName;
           userName = fullName;
           prefs.setString('userName', fullName);
         }
@@ -149,8 +157,8 @@ class CartNotifier extends StateNotifier<List<CartItem>> {
   }
 }
 
-final cartProvider = StateNotifierProvider<CartNotifier, List<CartItem>>((ref) {
-  return CartNotifier();
+final cartProvider = StateNotifierProvider.autoDispose<CartNotifier, List<CartItem>>((ref) {
+  return CartNotifier(ref);
 });
 final isPreviewFooterRender = StateProvider<bool>((ref) => false);
 //final isFooterRender = StateProvider<bool>((ref) => false);

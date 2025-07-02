@@ -2,14 +2,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/components/notifier_search.dart';
-import 'package:oassis_mart/components/search_filter.dart';
-import 'package:oassis_mart/pages/services/dialog_servicepreview.dart';
-import 'package:oassis_mart/pages/services/footer/service_footer.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/pages/services/service_item_card.dart';
-import 'package:oassis_mart/util/global_variables.dart';
-import 'package:oassis_mart/util/no_record.dart';
+import 'package:oasis_smart_services/components/notifier_search.dart';
+import 'package:oasis_smart_services/components/search_filter.dart';
+import 'package:oasis_smart_services/pages/services/dialog_servicepreview.dart';
+import 'package:oasis_smart_services/pages/services/footer/service_footer.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/pages/services/service_item_card.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
+import 'package:oasis_smart_services/util/no_record.dart';
 
 final showSearchNotifier = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -29,6 +29,11 @@ class _ShowServiceitemsState extends ConsumerState<ShowServiceitems> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -242,7 +247,7 @@ class _ShowServiceitemsState extends ConsumerState<ShowServiceitems> {
                       crossAxisCount: 3, // Show 3 items in a row
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,
-                      childAspectRatio: 0.60, // Adjust the height of each card
+                      childAspectRatio: 0.7, // Adjust the height of each card
                     ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {

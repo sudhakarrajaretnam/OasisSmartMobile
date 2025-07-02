@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/services/cart/service_cart.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/services/cart/service_cart.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 final isFooterRender = StateProvider.autoDispose<bool>((ref) => true);
 
@@ -46,14 +46,14 @@ class _ServiceFooter extends ConsumerState<ServiceFooter> {
       //offset: totalItems > 0 ? Offset.zero : const Offset(0, 1),
       child: Container(
         //padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        margin: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0), // Adjusted for tighter spacing
+        margin: const EdgeInsets.only(left: 14.0, right: 14.0, bottom: 16.0), // Adjusted for tighter spacing
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), //
         decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(16)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "$totalItems Service${totalItems > 1 ? 's' : ''} | ₹${totalPrice.toStringAsFixed(2)}",
+              "$totalItems Service${totalItems > 1 ? 's' : ''} | $currency${totalPrice.toStringAsFixed(0)}",
               style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
             ),
             Material(
@@ -85,8 +85,8 @@ class _ServiceFooter extends ConsumerState<ServiceFooter> {
                   child: const Row(
                     children: [
                       Text(
-                        "VIEW CART",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 16),
+                        "View",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
                       ),
                       SizedBox(width: 8),
                       Icon(

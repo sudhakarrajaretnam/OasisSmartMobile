@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-//import 'package:oassis_mart/pages/drawer/dialogs/view_cartinfo.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/pages/services/order/order_track_detail.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+//import 'package:oasis_smart_services/pages/drawer/dialogs/view_cartinfo.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/pages/services/order/order_track_detail.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 final controlProvider = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -15,7 +15,12 @@ class OrderSuccessPage extends ConsumerWidget {
   final List<dynamic> orderCode;
   final String createdAt;
 
-  const OrderSuccessPage({super.key, required this.serviceName, required this.recId, required this.orderCode, required this.createdAt});
+  const OrderSuccessPage(
+      {super.key,
+      required this.serviceName,
+      required this.recId,
+      required this.orderCode,
+      required this.createdAt});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,39 +78,52 @@ class OrderSuccessPage extends ConsumerWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                text: '${serviceName[index]}: ',
+                            Expanded(
+                              flex: 2,
+                              child: Text(
+                                '${serviceName[index]}: ',
+                                
                                 style: TextStyle(
+                                  letterSpacing: 0.1,
                                   fontSize: 24,
                                   color: Colors.grey[700],
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: value.toString(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 24,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                await _showFullScreenBottomSheet(context, createdAt, ref, recId[index]);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: primaryColor,
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                value.toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              child: const Text(
-                                'Track',
-                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 16),
+                            ),
+                            Expanded(
+                              flex: 1,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await _showFullScreenBottomSheet(
+                                      context, createdAt, ref, recId[index]);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Track',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 16),
+                                ),
                               ),
                             ),
                           ],
@@ -124,12 +142,14 @@ class OrderSuccessPage extends ConsumerWidget {
                         Navigator.pushNamedAndRemoveUntil(
                           context,
                           '/services', // Target route
-                          (Route<dynamic> route) => false, // Remove all previous routes
+                          (Route<dynamic> route) =>
+                              false, // Remove all previous routes
                         );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 32, vertical: 18),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
@@ -191,7 +211,8 @@ class OrderSuccessPage extends ConsumerWidget {
     );
   }
 
-  Future<void> _showFullScreenBottomSheet(BuildContext context, String createdAt, WidgetRef ref, String serviceId) {
+  Future<void> _showFullScreenBottomSheet(
+      BuildContext context, String createdAt, WidgetRef ref, String serviceId) {
     bool hasCompleted = false;
     return showGeneralDialog(
       context: context,
@@ -201,7 +222,8 @@ class OrderSuccessPage extends ConsumerWidget {
       pageBuilder: (context, animation, secondaryAnimation) {
         return Scaffold(
             appBar: AppBar(
-              title: Text(DateFormat('EEE MMM d, y hh:mm a').format(DateTime.parse(createdAt))),
+              title: Text(DateFormat('EEE MMM d, y hh:mm a')
+                  .format(DateTime.parse(createdAt))),
               leading: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: () => Navigator.of(context).pop(),
@@ -210,7 +232,9 @@ class OrderSuccessPage extends ConsumerWidget {
             body: Consumer(
               builder: (context, ref, _) {
                 final isShow = ref.watch(controlProvider);
-                return !isShow ? Container() : TrackScreenDialog(serviceId: serviceId);
+                return !isShow
+                    ? Container()
+                    : TrackScreenDialog(serviceId: serviceId);
               },
             )
             //!isShow ? Container() : TrackScreenDialog(serviceId: serviceId),

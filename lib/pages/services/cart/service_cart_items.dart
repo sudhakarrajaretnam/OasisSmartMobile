@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class ServiceListItem extends ConsumerWidget {
   final ServiceItem cartItem;
@@ -17,7 +17,7 @@ class ServiceListItem extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       child: SizedBox(
-        height: 100, // Add fixed height to the Row
+        height: 120, // Add fixed height to the Row
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch children to fill parent height
           children: [
@@ -56,10 +56,11 @@ class ServiceListItem extends ConsumerWidget {
                     children: [
                       Text(
                         cartItem.serviceName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        maxLines: 2,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, overflow: TextOverflow.ellipsis),
                       ),
                       Text(
-                        "${cartItem.noOfPersons} Person, $currency${cartItem.price.toStringAsFixed(2)}",
+                        "$currency${cartItem.price.toStringAsFixed(0)}",
                         style: const TextStyle(color: Color.fromARGB(255, 87, 87, 87), fontSize: 14),
                       ),
                     ],
@@ -88,7 +89,7 @@ class ServiceListItem extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 4),
                       // Quantity Text
                       SizedBox(
                         width: 40,
@@ -99,7 +100,7 @@ class ServiceListItem extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 4),
                       // Increment Button
                       Material(
                         color: Colors.transparent,
@@ -155,7 +156,7 @@ class ServiceListItem extends ConsumerWidget {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      "$currency${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}",
+                      "$currency${(cartItem.price * cartItem.quantity).toStringAsFixed(0)}",
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),

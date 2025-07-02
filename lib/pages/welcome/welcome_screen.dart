@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 //import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -35,7 +35,11 @@ class _WelcomeScreen extends State<WelcomeScreen> with SingleTickerProviderState
     ));
 
     // Start the animation when the screen renders
-    _animationController.forward();
+    Duration delay = const Duration(milliseconds: 300);
+    Future.delayed(delay, () {
+      _animationController.forward();
+    });
+    //_animationController.forward();
   }
 
   @override
@@ -68,99 +72,94 @@ class _WelcomeScreen extends State<WelcomeScreen> with SingleTickerProviderState
               ),
             ),
           ),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  'assets/splash-logo-outline.png',
+                  height: 180,
+                ),
+                const SizedBox(height: 25),
+                const Text(
+                  'We can do more',
+                  style: TextStyle(fontSize: 32.0, color: Colors.black, fontWeight: FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                SlideTransition(
+                  position: _slideAnimation,
+                  child: Column(
+                    children: [
+                      ButtonWidget(
+                        label: 'Buy',
+                        icon: Icons.shopping_cart,
+                        buttonWidth: buttonWidth,
+                        buttonId: "buy",
+                      ),
+                      const SizedBox(height: 25),
+                      ButtonWidget(
+                        label: 'Services',
+                        icon: Icons.home_repair_service,
+                        buttonWidth: buttonWidth,
+                        buttonId: "service",
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           // Positioned(
-          //   top: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: AppBar(
-          //     backgroundColor: Colors.transparent,
-          //     elevation: 0,
-          //     title: Text(
-          //       "Hi, $userName", // Default fallback for null userName
-          //       style: const TextStyle(color: Colors.white),
-          //     ),
-          //     leading: IconButton(
-          //       icon: const Icon(Icons.menu, color: Colors.white),
-          //       onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+          //   top: 150,
+          //   width: MediaQuery.of(context).size.width,
+          //   child: Center(
+          //     child: Column(
+          //       children: [
+          //         Image.asset(
+          //           'assets/splash-logo.png',
+          //           height: 180,
+          //         ),
+          //         const SizedBox(height: 25),
+          //         const Text(
+          //           'Choose your preference\n@ Oasis Smart',
+          //           style: TextStyle(fontSize: 32.0, color: Colors.black, fontWeight: FontWeight.w600),
+          //           textAlign: TextAlign.center,
+          //         ),
+          //         const SizedBox(height: 32),
+          //       ],
           //     ),
           //   ),
           // ),
-          // Foreground Content
-          Positioned(
-            top: 150,
-            width: MediaQuery.of(context).size.width,
-            child: Center(
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/splash-logo.png',
-                    height: 180,
-                  ),
-                  const SizedBox(height: 25),
-                  const Text(
-                    'Choose your preference\n@ Oassis Mart',
-                    style: TextStyle(fontSize: 32.0, color: Colors.black, fontWeight: FontWeight.w600),
-                    textAlign: TextAlign.center,
-                  ),
-                  // const Text(
-                  //   "@ Oassis Mart",
-                  //   style: TextStyle(fontSize: 50.0, color: Colors.white, fontWeight: FontWeight.w600),
-                  // ),
-                  // const SizedBox(height: 8),
-                  // const Text(
-                  //   'The ultimate destination',
-                  //   style: TextStyle(
-                  //     fontSize: 22.0,
-                  //     color: Colors.white,
-                  //     shadows: [
-                  //       Shadow(
-                  //         offset: Offset(4.0, 4.0),
-                  //         blurRadius: 10.0,
-                  //         //color: Colors.grey.withOpacity(0.5),
-                  //         color: Color.fromRGBO(128, 128, 128, 0.5),
-                  //       ),
-                  //       Shadow(
-                  //         offset: Offset(-4.0, -4.0),
-                  //         blurRadius: 10.0,
-                  //         color: Color.fromRGBO(128, 128, 128, 0.5),
-                  //         //color: Colors.grey.withOpacity(0.2),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  const SizedBox(height: 32),
-                ],
-              ),
-            ),
-          ),
           // Sliding Buttons
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: SlideTransition(
-              position: _slideAnimation,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 150),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    ButtonWidget(
-                      label: 'Buy',
-                      icon: Icons.shopping_cart,
-                      buttonWidth: buttonWidth,
-                      buttonId: "buy",
-                    ),
-                    const SizedBox(height: 25),
-                    ButtonWidget(
-                      label: 'Service',
-                      icon: Icons.home_repair_service,
-                      buttonWidth: buttonWidth,
-                      buttonId: "service",
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: SlideTransition(
+          //     position: _slideAnimation,
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(bottom: 150),
+          //       child: Column(
+          //         mainAxisSize: MainAxisSize.min,
+          //         children: [
+          //           ButtonWidget(
+          //             label: 'Buy',
+          //             icon: Icons.shopping_cart,
+          //             buttonWidth: buttonWidth,
+          //             buttonId: "buy",
+          //           ),
+          //           const SizedBox(height: 25),
+          //           ButtonWidget(
+          //             label: 'Service',
+          //             icon: Icons.home_repair_service,
+          //             buttonWidth: buttonWidth,
+          //             buttonId: "service",
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 //import 'package:intl/intl.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 // final serviceItemQuantity = StateProvider.autoDispose<int>((ref) => 0);
 // final selectDateProvider = StateProvider.autoDispose<DateTime>((ref) => DateTime.now());
@@ -47,20 +47,10 @@ class _TrackScreenDialog extends ConsumerState<TrackScreenDialog> {
     final cartState = ref.watch(viewServiceProvider);
 
     return Scaffold(
-        //backgroundColor: Colors.transparent,
-
-        // appBar: AppBar(
-        //   //backgroundColor: Colors.red,
-        //   title: const Text('Enter Details'),
-        //   leading: IconButton(
-        //     icon: const Icon(Icons.close),
-        //     onPressed: () {
-        //       Navigator.of(context).pop();
-        //     },
-        //   ),
-        // ),
         body: cartState.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(
+        child: CircularProgressIndicator(),
+      ),
       data: (cartItem) {
         final status = cartItem['status'].toString();
         final statusIcon = status == 'pending'
@@ -97,13 +87,6 @@ class _TrackScreenDialog extends ConsumerState<TrackScreenDialog> {
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
                         borderRadius: const BorderRadius.vertical(top: Radius.circular(20), bottom: Radius.circular(20)),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey,
-                        //     offset: Offset(0.0, 1.0), //(x,y)
-                        //     blurRadius: 6.0,
-                        //   ),
-                        // ],
                       ),
                     ),
                     Padding(
@@ -130,85 +113,85 @@ class _TrackScreenDialog extends ConsumerState<TrackScreenDialog> {
                         ),
                       ),
                     ),
-                    // Positioned(
-                    //   //alignment: Alignment.topRight,
-                    //   top: 2,
-                    //   right: 0,
-                    //   child: IconButton(
-                    //     icon: const Icon(Icons.close),
-                    //     onPressed: () {
-                    //       Navigator.of(context).pop();
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 12.0, 8.0, 80.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisAlignment: MainAxisAlignment.start,
+                    //mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                cartItem['serviceName'],
-                                textAlign: TextAlign.start,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  decoration: TextDecoration.none,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "${cartItem['noOfPersons']} Person${cartItem['noOfPersons'] == 1 ? '' : 's'}",
-                                    style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
-                                    textAlign: TextAlign.center,
+                          Expanded(
+                            flex: 60,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  cartItem['serviceName'],
+                                  textAlign: TextAlign.start,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    height: 1.2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.none,
+                                    color: Colors.black87,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                  const SizedBox(width: 10),
+                                ),
+                                Row(
+                                  children: [
+                                    // Text(
+                                    //   "${cartItem['noOfPersons']} Person${cartItem['noOfPersons'] == 1 ? '' : 's'}",
+                                    //   style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                    //   textAlign: TextAlign.center,
+                                    // ),
+                                    // const SizedBox(width: 10),
+                                    Text(
+                                      "$currency ${cartItem['price']}",
+                                      style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          //Container(),
+                          Expanded(
+                            flex: 40,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: btnColor, width: 1),
+                                borderRadius: BorderRadius.circular(30), // Fully rounded corners
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    //CupertinoIcons.timer,
+                                    statusIcon,
+                                    size: 18,
+                                    color: btnColor,
+                                  ),
+                                  const SizedBox(width: 5),
                                   Text(
-                                    "$currency ${cartItem['price']}",
-                                    style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey),
-                                    textAlign: TextAlign.center,
+                                    status.capitalize(),
+                                    style: TextStyle(
+                                      color: btnColor,
+                                      //fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      overflow: TextOverflow.ellipsis
+                                    ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                          //Container(),
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: btnColor, width: 1),
-                              borderRadius: BorderRadius.circular(30), // Fully rounded corners
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  //CupertinoIcons.timer,
-                                  statusIcon,
-                                  size: 20,
-                                  color: btnColor,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  status.capitalize(),
-                                  style: TextStyle(
-                                    color: btnColor,
-                                    //fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
                             ),
                           ),
                         ],
@@ -267,7 +250,7 @@ class _TrackScreenDialog extends ConsumerState<TrackScreenDialog> {
                             ],
                           ),
                           Text(
-                            '$currency ${(cartItem['price'] * cartItem['quantity']).toStringAsFixed(2)}',
+                            '$currency ${(cartItem['price'] * cartItem['quantity']).toStringAsFixed(0)}',
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

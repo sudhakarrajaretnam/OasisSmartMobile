@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/buy/cart_listitem.dart';
-import 'package:oassis_mart/pages/buy/empty_cart.dart';
-import 'package:oassis_mart/pages/buy/footer/cart_preview_footer.dart';
-import 'package:oassis_mart/pages/buy/notifier_cart.dart';
-import 'package:oassis_mart/util/global_variables.dart';
-//import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/buy/cart_listitem.dart';
+import 'package:oasis_smart_services/pages/buy/empty_cart.dart';
+import 'package:oasis_smart_services/pages/buy/footer/cart_preview_footer.dart';
+import 'package:oasis_smart_services/pages/buy/notifier_cart.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
+//import 'package:oasis_smart_services/util/global_variables.dart';
 
 class CartPage extends ConsumerWidget {
   //final String fromPage;

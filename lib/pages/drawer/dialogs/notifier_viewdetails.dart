@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 import 'package:http/http.dart' as http;
 
 class CartDisplayItem {
@@ -84,6 +84,7 @@ class CartViewNotifier extends StateNotifier<List<CartDataList>> {
     _isLoading = true;
     state = [...state];
     final url = Uri.parse('$apiUrl/grocery/orderDetails/$requestId');
+    //print(url);
     try {
       final response = await http.get(url);
       if (response.statusCode == 200) {
@@ -98,7 +99,7 @@ class CartViewNotifier extends StateNotifier<List<CartDataList>> {
             itemCode: buyItems['itemCode'],
             itemName: buyItems['itemName'],
             price: cartItem['price'],
-            quantity: buyItems['quantity'],
+            quantity: cartItem['quantity'],
             displayQuantity: "${buyItems['quantity']} ${buyItems['unit']}",
             imagePath: buyItems['imagePath'],
           ));

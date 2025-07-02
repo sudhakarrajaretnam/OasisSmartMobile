@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 //import 'package:loader_overlay/loader_overlay.dart';
-//import 'package:oassis_mart/helper/message_box.dart';
-//import 'package:oassis_mart/helper/message_box.dart';
-//import 'package:oassis_mart/pages/welcome/notifier_firebase_auth.dart';
-import 'package:oassis_mart/pages/welcome/notifier_otp.dart';
-import 'package:oassis_mart/pages/welcome/otp_verify.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+//import 'package:oasis_smart_services/helper/message_box.dart';
+//import 'package:oasis_smart_services/helper/message_box.dart';
+//import 'package:oasis_smart_services/pages/welcome/notifier_firebase_auth.dart';
+import 'package:oasis_smart_services/pages/welcome/notifier_otp.dart';
+import 'package:oasis_smart_services/pages/welcome/otp_verify.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class OtpScreen extends ConsumerStatefulWidget {
   const OtpScreen({super.key});

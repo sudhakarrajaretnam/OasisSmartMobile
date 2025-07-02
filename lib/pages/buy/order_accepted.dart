@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
-import 'package:oassis_mart/pages/buy/notifier_cart.dart';
-import 'package:oassis_mart/pages/drawer/dialogs/view_cartinfo.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/buy/notifier_cart.dart';
+import 'package:oasis_smart_services/pages/drawer/dialogs/view_cartinfo.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class OrderAcceptedPage extends StatelessWidget {
   final String recId;
@@ -77,7 +77,7 @@ class OrderAcceptedPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 import 'package:http/http.dart' as http;
 
 class AddressState {
@@ -55,7 +55,6 @@ class AddressNotifier extends StateNotifier<AddressState> {
         state = state.copyWith(isNew: true, fullName: '', address: '', pincode: '', isLoading: false);
       }
     } catch (error) {
-      print('Error: $error');
       rethrow;
     } finally {
       state = state.copyWith(isLoading: false);

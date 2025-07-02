@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class ServiceItemTile extends ConsumerWidget {
   final ServiceItem cartItem;
@@ -25,7 +25,7 @@ class ServiceItemTile extends ConsumerWidget {
               child: Center(
                 child: Text(
                   item['serviceName'] as String,
-                  style: const TextStyle(fontWeight: FontWeight.bold, height: 1.2),
+                  style: const TextStyle(fontWeight: FontWeight.w500, height: 1.2),
                   textAlign: TextAlign.center,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -43,7 +43,7 @@ class ServiceItemTile extends ConsumerWidget {
               child: Align(
                 alignment: Alignment.center,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
+                  padding: const EdgeInsets.only(top: 2.0),
                   child: CachedNetworkImage(
                     imageUrl: item['imagePath'] as String,
                     placeholder: (context, url) => const Center(
@@ -63,50 +63,34 @@ class ServiceItemTile extends ConsumerWidget {
             ),
           ),
           Expanded(
-            flex: 4,
+            flex: 3,
             child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: const EdgeInsets.only(top: 2.0, left: 0, right: 0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          children: [
-                            const Text(
-                              "Person",
-                              style: TextStyle(fontWeight: FontWeight.w400, height: 1.2),
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "${item['noOfPersons']}",
-                              style: const TextStyle(fontWeight: FontWeight.bold, height: 1.2),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          children: [
-                            const Text(
-                              "Price",
-                              style: TextStyle(fontWeight: FontWeight.w400, height: 1.2),
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "$currency${item['price']}",
-                              style: const TextStyle(fontWeight: FontWeight.bold, height: 1.2),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.start,
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.only(left: 10.0, right: 8.0),
+                  //       child: Text(
+                  //         "Price: $currency${item['price']}",
+                  //         //"$currency${item['price']}",
+                  //         //"${currency}1200",
+                  //         style: const TextStyle(fontWeight: FontWeight.w400, height: 1.2, fontSize: 14),
+                  //         overflow: TextOverflow.ellipsis,
+                  //         textAlign: TextAlign.center,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Text(
+                    "$currency${item['price']}",
+                    //"${currency}1200",
+                    style: const TextStyle(fontWeight: FontWeight.w400, height: 1.2, fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,7 +122,7 @@ class ServiceItemTile extends ConsumerWidget {
                                 cartItem.quantity == 0
                                     ? const SizedBox()
                                     : Positioned(
-                                        right: 10,
+                                        right: 5,
                                         top: 1,
                                         child: Container(
                                           padding: const EdgeInsets.all(2),
@@ -160,6 +144,106 @@ class ServiceItemTile extends ConsumerWidget {
               ),
             ),
           ),
+          // Expanded(
+          //   flex: 4,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(top: 8.0, left: 2, right: 2),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Row(
+          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //           children: [
+          //             Expanded(
+          //               flex: 2,
+          //               child: Column(
+          //                 children: [
+          //                   const Text(
+          //                     "Person",
+          //                     style: TextStyle(fontWeight: FontWeight.w400, height: 1.2, fontSize: 14),
+          //                     textAlign: TextAlign.center,
+          //                   ),
+          //                   Text(
+          //                     "${item['noOfPersons']}",
+          //                     style: const TextStyle(fontWeight: FontWeight.w500, height: 1.2, fontSize: 14),
+          //                     textAlign: TextAlign.center,
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //             Expanded(
+          //               flex: 2,
+          //               child: Column(
+          //                 children: [
+          //                   const Text(
+          //                     "Price",
+          //                     style: TextStyle(fontWeight: FontWeight.w400, height: 1.2, fontSize: 14),
+          //                     textAlign: TextAlign.center,
+          //                   ),
+          //                   Text(
+          //                     "$currency${item['price']}",
+          //                     //"${currency}1200",
+          //                     style: const TextStyle(fontWeight: FontWeight.w400, height: 1.2, fontSize: 14),
+          //                     overflow: TextOverflow.ellipsis,
+          //                     textAlign: TextAlign.center,
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         Column(
+          //           crossAxisAlignment: CrossAxisAlignment.stretch,
+          //           //mainAxisAlignment: MainAxisAlignment.end,
+          //           children: [
+          //             Material(
+          //               color: Colors.transparent,
+          //               child: InkWell(
+          //                 borderRadius: const BorderRadius.horizontal(left: Radius.circular(12), right: Radius.circular(12)),
+          //                 onTap: () {
+          //                   ref.read(serviceDialogProvider.notifier).openEntryDialog(cartItem);
+          //                 },
+          //                 child: Ink(
+          //                   padding: const EdgeInsets.only(top: 6, bottom: 6),
+          //                   decoration: const BoxDecoration(
+          //                     color: Color(0xFFE9F6E1), // Green color for the button
+          //                     //color: Color.fromARGB(255, 253, 213, 213), // Green color for the button
+          //                     borderRadius: BorderRadius.horizontal(left: Radius.circular(12), right: Radius.circular(12)),
+          //                   ),
+          //                   child: Stack(
+          //                     children: [
+          //                       Center(
+          //                         child: Text(
+          //                           cartItem.quantity == 0 ? "Add" : "Added",
+          //                           //textAlign: TextAlign.center,
+          //                           style: TextStyle(color: Colors.green[800], fontWeight: FontWeight.bold),
+          //                         ),
+          //                       ),
+          //                       cartItem.quantity == 0
+          //                           ? const SizedBox()
+          //                           : Positioned(
+          //                               right: 10,
+          //                               top: 1,
+          //                               child: Container(
+          //                                 padding: const EdgeInsets.all(2),
+          //                                 decoration: BoxDecoration(
+          //                                   color: Colors.green[500],
+          //                                   shape: BoxShape.circle,
+          //                                 ),
+          //                                 child: const Icon(Icons.check, color: Colors.white, size: 14),
+          //                               ),
+          //                             ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               ),
+          //             )
+          //           ],
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:oasis_smart_services/pages/welcome/notifier_otp.dart';
 
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ServiceDialogNotifier extends ChangeNotifier {
@@ -40,8 +41,8 @@ class ServiceItem {
   final String serviceName;
   final String imageUrl;
   final double price;
-  final int noOfPersons;
-  final int workingHours;
+  final int? noOfPersons;
+  final int? workingHours;
   final String description;
   final int quantity;
   final String? comment;
@@ -67,8 +68,9 @@ class ServiceItem {
       serviceId: serviceId,
       serviceName: serviceName,
       price: price,
-      noOfPersons: noOfPersons,
-      workingHours: workingHours,
+      //noOfPersons: noOfPersons,
+      noOfPersons: 0,
+      workingHours: 0,
       quantity: quantity ?? this.quantity,
       description: description,
       imageUrl: imageUrl,
@@ -112,8 +114,8 @@ class ServiceNotifier extends StateNotifier<List<ServiceItem>> {
         serviceId: item.serviceId,
         serviceName: item.serviceName,
         price: item.price,
-        noOfPersons: item.noOfPersons,
-        workingHours: item.workingHours,
+        noOfPersons: 0,
+        workingHours: 0,
         imageUrl: item.imageUrl,
         description: item.description,
         quantity: -1,
@@ -148,10 +150,10 @@ class ServiceNotifier extends StateNotifier<List<ServiceItem>> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'userId': userId, 'cartItems': cartItems, 'fullName': fullName, 'address': address, 'pincode': pincode, 'isNew': isNew}),
       );
-      print(response.body);
       if (response.statusCode == 200) {
         final prefs = await SharedPreferences.getInstance();
         if (prefs.getString('userName') != fullName) {
+          ref.read(nameProvider.notifier).state = fullName;
           userName = fullName;
           prefs.setString('userName', fullName);
         }
@@ -166,6 +168,28 @@ class ServiceNotifier extends StateNotifier<List<ServiceItem>> {
       }
     } catch (error) {
       print('Error submitting cart: $error');
+    }
+  }
+
+  Future<void> addAddress(String fullName, String address, String pincode) async {
+    final url = Uri.parse('$apiUrl/service/addaddress');
+    //print({'userId': userId, 'fullName': fullName, 'address': address, 'pincode': pincode, 'coutry': ref.read(countryProvider), 'mobile': mobileNumber});
+    try {
+      final response = await http.put(url,
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode({'userId': userId, 'fullName': fullName, 'address': address, 'pincode': pincode, 'coutry': userCountry, 'mobile': mobileNumber}));
+      if (response.statusCode == 200) {
+        final prefs = await SharedPreferences.getInstance();
+        if (prefs.getString('userName') != fullName) {
+          ref.read(nameProvider.notifier).state = fullName;
+          userName = fullName;
+          prefs.setString('userName', fullName);
+        }
+      } else {
+        print('Failed to submit address: ${response.body}');
+      }
+    } catch (error) {
+      print('Error submitting address: $error');
     }
   }
 
@@ -192,7 +216,7 @@ class ServiceNotifier extends StateNotifier<List<ServiceItem>> {
   }
 }
 
-final serviceNotifierProvider = StateNotifierProvider<ServiceNotifier, List<ServiceItem>>((ref) => ServiceNotifier(ref));
+final serviceNotifierProvider = StateNotifierProvider.autoDispose<ServiceNotifier, List<ServiceItem>>((ref) => ServiceNotifier(ref));
 
 class ServiceCategory {
   final String baseUrl;
@@ -200,7 +224,7 @@ class ServiceCategory {
   ServiceCategory(this.baseUrl);
 
   Future<List<dynamic>> searchCategory(String query) async {
-    print('$baseUrl/service/getServices?search=$query');
+    //print('$baseUrl/service/getServices?search=$query');
     final url = Uri.parse('$baseUrl/service/getServices?search=$query');
     final response = await http.get(url);
 
@@ -230,12 +254,12 @@ final serviceApiProvider = Provider<ServiceCategory>((ref) {
   return ServiceCategory(apiUrl);
 });
 
-final serviceCategoryProvider = FutureProvider.family<List<dynamic>, String>((ref, query) async {
+final serviceCategoryProvider = FutureProvider.autoDispose.family<List<dynamic>, String>((ref, query) async {
   final serviceCategory = ref.read(serviceApiProvider);
   return serviceCategory.searchCategory(query);
 });
 
-final serviceItemsProvider = FutureProvider.family<List<dynamic>, String>((ref, serviceId) async {
+final serviceItemsProvider = FutureProvider.autoDispose.family<List<dynamic>, String>((ref, serviceId) async {
   final serviceCategory = ref.read(serviceApiProvider);
   return serviceCategory.searchService(serviceId);
 });

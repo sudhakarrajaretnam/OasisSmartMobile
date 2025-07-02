@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/sumansavio/Development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/sumansavio/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/sumansavio/Development/oasis_smart/android/app/.cxx/RelWithDebInfo/4v2o1160/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/sumansavio/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/sumansavio/Development/oasis_smart/android/app/.cxx/RelWithDebInfo/4v2o1160/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

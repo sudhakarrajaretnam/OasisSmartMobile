@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-//import 'package:oassis_mart/pages/buy/notifier_cart.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+//import 'package:oasis_smart_services/pages/buy/notifier_cart.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 class CartViewListItem extends ConsumerWidget {
   final String itemCode;
@@ -30,7 +30,7 @@ class CartViewListItem extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
       child: SizedBox(
-        height: 100, // Add fixed height to the Row
+        height: 120, // Add fixed height to the Row
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch, // Stretch children to fill parent height
           children: [
@@ -74,7 +74,8 @@ class CartViewListItem extends ConsumerWidget {
                     children: [
                       Text(
                         itemName,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        maxLines: 2,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, overflow: TextOverflow.ellipsis,),
                       ),
                       Text(
                         "$displayQuantity, $currency $price",
@@ -173,7 +174,7 @@ class CartViewListItem extends ConsumerWidget {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      "$currency${(price * quantity).toStringAsFixed(2)}",
+                      "$currency${(price * quantity).toStringAsFixed(0)}",
                       style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),

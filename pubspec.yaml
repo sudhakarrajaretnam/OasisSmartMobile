@@ -1,11 +1,11 @@
-name: oassis_mart
+name: oasis_smart_services
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
+# A version number is three numbers separated by dots, like 1.2.43ine
 # followed by an optional build number separated by a +.
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
@@ -16,7 +16,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+#version: 1.0.2+2
+version: 1.0.1+10
 
 environment:
   sdk: ^3.6.0-217.0.dev
@@ -38,7 +39,7 @@ dependencies:
   hooks_riverpod: ^2.6.1
   loader_overlay: ^4.0.4+1
   font_awesome_flutter: ^10.8.0
-  flutter_otp_text_field: ^1.1.0+2
+  flutter_otp_text_field: ^1.5.1+1
   firebase_core: ^3.9.0
   firebase_auth: ^5.3.4
   shared_preferences: ^2.3.4
@@ -52,6 +53,8 @@ dependencies:
   cached_network_image: ^3.4.1
   path_provider: ^2.1.5
   flutter_native_splash: ^2.4.4
+  flutter_launcher_icons: ^0.14.3
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
@@ -70,12 +73,16 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter_native_splash:
   background_image: assets/splash-bg.png  # Your splash screen background image
-  image: assets/splash-logo.png  # Your app icon for the splash screen
+  image: assets/splash-logo-outline.png  # Your app icon for the splash screen
   fullscreen: true  # Defaults to true, but if you need to change it, do it here
   android_12:
-    background_image: assets/splash-bg.png  # Your splash screen background image
-    image: assets/splash-logo.png
-    
+    color: "#ffffff"  # Optional, default is white
+    image: assets/splash-logo-android.png
+    fullscreen: true
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/splash-logo.png"
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -85,6 +92,8 @@ flutter:
   assets:
     #- assets/images/home_logo.png
     - assets/splash-logo.png
+    - assets/splash-logo-outline.png
+    - assets/splash-logo-android.png
     - assets/images/in.png
     - assets/images/om.png
     - assets/images/spinner.gif

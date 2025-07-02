@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 //import 'package:lottie/lottie.dart';
-import 'package:oassis_mart/pages/drawer/dialogs/view_cartinfo.dart';
-import 'package:oassis_mart/pages/drawer/notifier_history.dart';
-import 'package:oassis_mart/pages/services/order/order_track_detail.dart';
-import 'package:oassis_mart/util/global_variables.dart';
-import 'package:oassis_mart/util/no_record.dart';
+import 'package:oasis_smart_services/pages/drawer/dialogs/view_cartinfo.dart';
+import 'package:oasis_smart_services/pages/drawer/notifier_history.dart';
+import 'package:oasis_smart_services/pages/services/order/order_track_detail.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
+import 'package:oasis_smart_services/util/no_record.dart';
 
 final controlProvider = StateProvider.autoDispose<bool>((ref) => false);
 
@@ -59,9 +59,11 @@ class _HistoryTabs extends ConsumerState<HistoryTabs> with SingleTickerProviderS
 
     Future.microtask(() {
       if (initialTab == 0) {
-        ref.read(orderHistoryProvider.notifier).fetchOrders();
+        final orderNotifier = ref.read(orderHistoryProvider.notifier);
+        orderNotifier.fetchOrders(isRefresh: true);
       } else {
-        ref.read(requestHistoryProvider.notifier).fetchRequests();
+        final requestNotifier = ref.read(requestHistoryProvider.notifier);
+        requestNotifier.fetchRequests(isRefresh: true);
       }
       //ref.read(orderHistoryProvider.notifier).fetchOrders();
     });
@@ -235,15 +237,17 @@ class _HistoryTabs extends ConsumerState<HistoryTabs> with SingleTickerProviderS
                                               style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500)),
                                           const SizedBox(height: 2),
                                           Text(
-                                            'Status: Pending',
+                                            'Status: ${order.status}',
                                             style: TextStyle(
-                                              color: order.status == 'pending'
-                                                  ? Colors.red
-                                                  : order.status == 'approved'
-                                                      ? Colors.green
-                                                      : order.status == 'rejected'
-                                                          ? Colors.red
-                                                          : Colors.red,
+                                              color: order.status == 'completed'
+                                                  ? primaryColor
+                                                  : order.status == 'pending'
+                                                      ? Colors.red
+                                                      : order.status == 'approved'
+                                                          ? Colors.green
+                                                          : order.status == 'rejected'
+                                                              ? Colors.red
+                                                              : Colors.red,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -422,7 +426,7 @@ class _HistoryTabs extends ConsumerState<HistoryTabs> with SingleTickerProviderS
                                             style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
                                           ),
                                           const SizedBox(height: 2),
-                                          Text('Total: $currency ${(order.quantity * order.price).toStringAsFixed(2)}',
+                                          Text('Total: $currency ${(order.quantity * order.price).toStringAsFixed(0)}',
                                               style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500)),
                                           const SizedBox(height: 2),
                                           Text(

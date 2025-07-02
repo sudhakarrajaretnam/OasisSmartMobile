@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/buy/cart_page.dart';
-import 'package:oassis_mart/pages/buy/notifier_cart.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/buy/cart_page.dart';
+import 'package:oasis_smart_services/pages/buy/notifier_cart.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 final isFooterRender = StateProvider.autoDispose<bool>((ref) => true);
 
@@ -46,15 +46,15 @@ class _CartFooter extends ConsumerState<CartFooter> {
       //offset: totalItems > 0 ? Offset.zero : const Offset(0, 1),
       child: Container(
         //padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        margin: const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0), // Adjusted for tighter spacing
+        margin: const EdgeInsets.only(left: 14.0, right: 14.0, bottom: 16.0), // Adjusted for tighter spacing
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0), //
         decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(16)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "$totalItems item${totalItems > 1 ? 's' : ''} | ₹${totalPrice.toStringAsFixed(2)}",
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
+              "${cart.length} item${cart.length > 1 ? 's' : ''} | $currency${totalPrice.toStringAsFixed(0)}",
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18),
             ),
             Material(
               color: Colors.transparent,
@@ -85,8 +85,8 @@ class _CartFooter extends ConsumerState<CartFooter> {
                   child: const Row(
                     children: [
                       Text(
-                        "VIEW CART",
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+                        "View",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 18),
                       ),
                       SizedBox(width: 8),
                       Icon(

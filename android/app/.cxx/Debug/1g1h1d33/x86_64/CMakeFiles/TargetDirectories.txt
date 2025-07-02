@@ -1,0 +1,2 @@
+/Users/sumansavio/Development/oasis_smart/android/app/.cxx/Debug/1g1h1d33/x86_64/CMakeFiles/edit_cache.dir
+/Users/sumansavio/Development/oasis_smart/android/app/.cxx/Debug/1g1h1d33/x86_64/CMakeFiles/rebuild_cache.dir

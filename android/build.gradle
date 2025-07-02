@@ -1,10 +1,17 @@
 buildscript {
+    ext.kotlin_version = '2.1.0'
+    ext {
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        minSdkVersion = 21  // Or keep your current value
+    }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.0.2' // Ensure this matches your Gradle plugin version
+        classpath 'com.android.tools.build:gradle:8.2.1' //8.0.2 Ensure this matches your Gradle plugin version
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:4.3.15' // Google Services plugin
     }
 }
@@ -30,3 +37,4 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+apply plugin: 'com.google.gms.google-services'

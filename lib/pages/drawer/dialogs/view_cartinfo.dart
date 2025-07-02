@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/drawer/dialogs/cart_listitem.dart';
-import 'package:oassis_mart/pages/drawer/dialogs/notifier_viewdetails.dart';
-import 'package:oassis_mart/pages/drawer/dialogs/view_footer.dart';
+import 'package:oasis_smart_services/pages/drawer/dialogs/cart_listitem.dart';
+import 'package:oasis_smart_services/pages/drawer/dialogs/notifier_viewdetails.dart';
+import 'package:oasis_smart_services/pages/drawer/dialogs/view_footer.dart';
 
 class ViewCartInfo extends ConsumerStatefulWidget {
   final String requestId;
@@ -82,9 +82,9 @@ class _ViewCartInfo extends ConsumerState<ViewCartInfo> {
                         ),
                       ],
                     ),
-                    const Align(
+                    Align(
                       alignment: Alignment.bottomCenter,
-                      child: ViewFooter(),
+                      child: ViewFooter(status: cartInfo[0].status),
                     ),
                   ],
                 ),

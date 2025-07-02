@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/buy/items_page.dart';
-import 'package:oassis_mart/pages/buy/notifier_buy.dart';
-import 'package:oassis_mart/pages/services/notifier_service.dart';
-import 'package:oassis_mart/pages/services/show_available_services.dart';
-import 'package:oassis_mart/util/global_variables.dart';
-import 'package:oassis_mart/util/no_record.dart';
+import 'package:oasis_smart_services/pages/buy/items_page.dart';
+import 'package:oasis_smart_services/pages/buy/notifier_buy.dart';
+import 'package:oasis_smart_services/pages/services/notifier_service.dart';
+import 'package:oasis_smart_services/pages/services/show_available_services.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
+import 'package:oasis_smart_services/util/no_record.dart';
 
 class AllCategory extends ConsumerStatefulWidget {
   final String searchText;

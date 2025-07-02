@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:oassis_mart/pages/buy/notifier_cart.dart';
-import 'package:oassis_mart/util/global_variables.dart';
+import 'package:oasis_smart_services/pages/buy/notifier_cart.dart';
+import 'package:oasis_smart_services/util/global_variables.dart';
 
 final itemQuantity = StateProvider<int>((ref) => 0);
 
@@ -99,7 +99,7 @@ void showFullScreenDialog(BuildContext context, WidgetRef ref, String title, Str
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                "${cartItem.displayQuantity} ₹${cartItem.price.toStringAsFixed(2)}",
+                                "${cartItem.displayQuantity} $currency${cartItem.price.toStringAsFixed(0)}",
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey,
@@ -165,7 +165,7 @@ void showFullScreenDialog(BuildContext context, WidgetRef ref, String title, Str
                                     ],
                                   ),
                                   Text(
-                                    '₹${(cartItem.price * quantity).toStringAsFixed(2)}',
+                                    '$currency${(cartItem.price * quantity).toStringAsFixed(0)}',
                                     style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
