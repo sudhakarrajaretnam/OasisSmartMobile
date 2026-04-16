@@ -17,7 +17,30 @@ def keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
-def hasReleaseKeystore = ['keyAlias', 'keyPassword', 'storeFile', 'storePassword'].every { keystoreProperties[it] }
+def requiredReleaseSigningKeys = ['keyAlias', 'keyPassword', 'storeFile', 'storePassword']
+def missingReleaseSigningKeys = requiredReleaseSigningKeys.findAll { !keystoreProperties[it] }
+def releaseKeystoreFile = keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+def hasReleaseKeystore = missingReleaseSigningKeys.isEmpty() && releaseKeystoreFile?.exists()
+def isReleaseTaskRequested = gradle.startParameter.taskNames.any { it.toLowerCase().contains("release") }
+
+if (isReleaseTaskRequested && !hasReleaseKeystore) {
+    def signingIssues = []
+
+    if (!keystorePropertiesFile.exists()) {
+        signingIssues << "android/key.properties is missing"
+    }
+    if (!missingReleaseSigningKeys.isEmpty()) {
+        signingIssues << "missing properties: ${missingReleaseSigningKeys.join(', ')}"
+    }
+    if (keystoreProperties['storeFile'] && !releaseKeystoreFile?.exists()) {
+        signingIssues << "keystore file not found: ${releaseKeystoreFile}"
+    }
+
+    throw new IllegalStateException(
+        "Release signing is not configured correctly. ${signingIssues.join('; ')}. " +
+        "Add the configured upload keystore to android/key.properties before building a release bundle."
+    )
+}
 
 android {
     namespace = "com.oasis.oasissmart"
@@ -54,7 +77,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig = hasReleaseKeystore ? signingConfigs.release : signingConfigs.debug
+            signingConfig = signingConfigs.release
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
